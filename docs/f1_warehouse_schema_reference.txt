@@ -1,0 +1,144 @@
+F1 DATA WAREHOUSE — TABLES, VARIABLES, AND DATA TYPES
+
+1. dim_driver
+Grain: One row per driver
+
+driver_key              INT
+driver_id               VARCHAR
+driver_number           INT
+abbreviation            VARCHAR(3)
+first_name              VARCHAR
+last_name               VARCHAR
+full_name               VARCHAR
+country_code            VARCHAR(3)
+
+
+2. dim_team
+Grain: One row per team identity / validity period
+
+team_key                INT
+team_id                 VARCHAR
+team_name               VARCHAR
+team_colour             VARCHAR(6)
+valid_from_season       SMALLINT
+valid_to_season         SMALLINT
+
+
+3. dim_circuit
+Grain: One row per circuit
+
+circuit_key             INT
+circuit_name            VARCHAR
+location                VARCHAR
+country                 VARCHAR
+circuit_length_km       NUMERIC(6,3)
+
+
+4. dim_race
+Grain: One row per championship Grand Prix
+
+race_key                INT
+season                  SMALLINT
+round_number            SMALLINT
+official_event_name     VARCHAR
+event_date              DATE
+event_format            VARCHAR
+circuit_key             INT
+
+
+5. fact_race_results
+Grain: One row per driver per race
+
+race_result_key         BIGINT
+race_key                INT
+driver_key              INT
+team_key                INT
+grid_position           SMALLINT
+finish_position         SMALLINT
+classified_position     VARCHAR
+points                  NUMERIC(5,2)
+laps_completed          SMALLINT
+race_time               INTERVAL
+status                  VARCHAR
+
+
+6. fact_qualifying
+Grain: One row per driver per qualifying event
+
+qualifying_key          BIGINT
+race_key                INT
+driver_key              INT
+team_key                INT
+qualifying_position     SMALLINT
+q1_time                 INTERVAL
+q2_time                 INTERVAL
+q3_time                 INTERVAL
+
+
+7. fact_lap_times
+Grain: One row per driver per lap per race
+
+lap_key                 BIGINT
+race_key                INT
+driver_key              INT
+team_key                INT
+lap_number              SMALLINT
+lap_time                INTERVAL
+sector_1_time           INTERVAL
+sector_2_time           INTERVAL
+sector_3_time           INTERVAL
+position                SMALLINT
+stint                   SMALLINT
+compound                VARCHAR
+tyre_life               NUMERIC(6,1)
+fresh_tyre              BOOLEAN
+pit_in_time             INTERVAL
+pit_out_time            INTERVAL
+track_status            VARCHAR
+deleted                 BOOLEAN
+is_accurate             BOOLEAN
+is_personal_best        BOOLEAN
+
+
+KEY / CONSTRAINT NOTES
+
+dim_driver
+- PK: driver_key
+- UNIQUE: driver_id
+
+dim_team
+- PK: team_key
+- UNIQUE: (team_id, valid_from_season)
+
+dim_circuit
+- PK: circuit_key
+- UNIQUE: (circuit_name, location, country)
+
+dim_race
+- PK: race_key
+- FK: circuit_key -> dim_circuit.circuit_key
+- UNIQUE: (season, round_number)
+
+fact_race_results
+- PK: race_result_key
+- FK: race_key -> dim_race.race_key
+- FK: driver_key -> dim_driver.driver_key
+- FK: team_key -> dim_team.team_key
+- UNIQUE: (race_key, driver_key)
+
+fact_qualifying
+- PK: qualifying_key
+- FK: race_key -> dim_race.race_key
+- FK: driver_key -> dim_driver.driver_key
+- FK: team_key -> dim_team.team_key
+- UNIQUE: (race_key, driver_key)
+
+fact_lap_times
+- PK: lap_key
+- FK: race_key -> dim_race.race_key
+- FK: driver_key -> dim_driver.driver_key
+- FK: team_key -> dim_team.team_key
+- UNIQUE: (race_key, driver_key, lap_number)
+
+Surrogate keys (driver_key, team_key, circuit_key, race_key, race_result_key,
+qualifying_key, lap_key) are auto-generated using PostgreSQL identity columns.
