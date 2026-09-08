@@ -1,0 +1,8 @@
+# Created by venv; see https://docs.python.org/3/library/venv.html
+.env
+venv/
+data/cache/
+data/*_partial.csv
+data/*_clean.csv
+data/*checkpoint*
+src/extract/EDA.ipynb
