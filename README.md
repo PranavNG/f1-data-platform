@@ -14,7 +14,7 @@ FastF1 / Circuit Reference Data
 
 Apache Airflow will be used to orchestrate the pipeline.
 
-![F1 Data Platform Architecture](docs/Arch_diagram.jpg)
+![F1 Data Platform Architecture](docs/Arch_diagram.png)
 
 ## Tech Stack
 
