@@ -1,0 +1,8 @@
+.env
+.DS_Store
+venv/
+data/cache/
+data/*_partial.csv
+data/*_clean.csv
+data/*checkpoint*
+src/extract/EDA.ipynb
