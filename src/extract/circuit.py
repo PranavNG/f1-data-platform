@@ -10,9 +10,6 @@ OUTPUT_FILE = Path("data/circuits_clean.csv")
 
 all_circuits = []
 
-# -----------------------------------
-# 1. Extract raw circuit information
-# -----------------------------------
 for season in range(START_SEASON, END_SEASON + 1):
 
     schedule = fastf1.get_event_schedule(season)
@@ -49,9 +46,6 @@ print("\nTotal raw combinations:")
 print(len(circuits_df))
 
 
-# -----------------------------------
-# 2. Load circuit reference mapping
-# -----------------------------------
 reference_df = pd.read_csv(
     REFERENCE_FILE
 )
@@ -59,10 +53,6 @@ reference_df = pd.read_csv(
 print("\nReference mappings loaded:")
 print(len(reference_df))
 
-
-# -----------------------------------
-# 3. Merge FastF1 with reference data
-# -----------------------------------
 circuits_merged = circuits_df.merge(
     reference_df,
     left_on=["Location", "Country"],
@@ -70,10 +60,6 @@ circuits_merged = circuits_df.merge(
     how="left"
 )
 
-
-# -----------------------------------
-# 4. Check for missing mappings
-# -----------------------------------
 missing = circuits_merged[
     circuits_merged["circuit_name"].isna()
 ]
@@ -96,10 +82,6 @@ if not missing.empty:
         "Some circuits are missing from circuit_reference.csv"
     )
 
-
-# -----------------------------------
-# 5. Build canonical circuit dataset
-# -----------------------------------
 circuits_clean_df = circuits_merged[
     [
         "circuit_name",
@@ -122,27 +104,14 @@ circuits_clean_df = (
     .reset_index(drop=True)
 )
 
-
-# -----------------------------------
-# 6. Save clean circuit data
-# -----------------------------------
 circuits_clean_df.to_csv(
     OUTPUT_FILE,
     index=False
 )
 
-
-# -----------------------------------
-# 7. Final check
-# -----------------------------------
 print("\nClean circuit data:")
 print(circuits_clean_df)
 
-print(
-    "\nTotal canonical circuits:",
-    len(circuits_clean_df)
-)
+print("\nTotal canonical circuits:", len(circuits_clean_df))
 
-print(
-    f"\nSaved to {OUTPUT_FILE}"
-)
+print(f"\nSaved to {OUTPUT_FILE}")
