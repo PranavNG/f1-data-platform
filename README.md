@@ -28,7 +28,7 @@ Apache Airflow will be used to orchestrate the pipeline.
 
 ## Data Warehouse
 
-The warehouse currently contains seven core tables.
+The PostgreSQL warehouse currently contains seven core tables.
 
 ### Dimension Tables
 
@@ -44,6 +44,19 @@ The warehouse currently contains seven core tables.
 - `fact_lap_times`
 
 The model uses shared dimensions across multiple fact tables to support race, qualifying, lap-level, driver, team, and circuit analysis.
+
+## dbt Transformation Layer
+
+The dbt project currently includes:
+
+- Source definitions for all warehouse tables
+- Source-level data quality tests
+- Staging models for all dimension and fact tables
+- Standardised lap and qualifying time fields
+- Derived race-result metrics such as positions changed, podium flags, winner flags, and race completion status
+- Cleaned lap-level fields for downstream race pace and strategy analysis
+
+Intermediate models and analytical marts will be added for driver performance, team performance, race pace, tyre strategy, and race-level analysis.
 
 ## Planned Tableau Dashboard
 
@@ -83,8 +96,9 @@ The model uses shared dimensions across multiple fact tables to support race, qu
 - [x] Dimension and fact tables designed
 - [x] Primary and foreign key relationships implemented
 - [x] Python ingestion pipeline
-- [x] Load FastF1 data into PostgreSQL
-- [ ] dbt transformations and data quality tests
+- [x] FastF1 and reference data loaded into PostgreSQL
+- [x] dbt staging models created
+- [ ] Intermediate dbt models and analytical marts
 - [ ] Airflow orchestration
 - [ ] Tableau dashboard
 
@@ -93,16 +107,23 @@ The model uses shared dimensions across multiple fact tables to support race, qu
 ```text
 f1-data-platform/
 ├── data/
+│   └── reference/
 ├── docs/
-│   |──f1_warehouse_schema_reference.txt
-|.  └── Arch_diagram.jpg
+│   ├── f1_warehouse_schema_reference.txt
+│   └── Arch_diagram.png
 ├── sql/
 │   └── create_tables.sql
 ├── src/
 │   ├── extract/
 │   ├── load/
 │   └── config/
-├── dbt/
+├── f1_dbt/
+│   ├── models/
+│   │   ├── sources.yml
+│   │   └── staging/
+│   ├── macros/
+│   ├── tests/
+│   └── dbt_project.yml
 ├── airflow/
 ├── dashboards/
 ├── tests/
