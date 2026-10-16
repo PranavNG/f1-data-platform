@@ -6,3 +6,11 @@ data/*_partial.csv
 data/*_clean.csv
 data/*checkpoint*
 src/extract/EDA.ipynb
+
+# dbt generated files
+f1_dbt/target/
+f1_dbt/logs/
+f1_dbt/dbt_packages/
+
+# Local dbt user config
+*.user.yml
