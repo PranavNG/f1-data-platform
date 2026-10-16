@@ -82,8 +82,8 @@ The model uses shared dimensions across multiple fact tables to support race, qu
 - [x] PostgreSQL warehouse created
 - [x] Dimension and fact tables designed
 - [x] Primary and foreign key relationships implemented
-- [ ] Python ingestion pipeline
-- [ ] Load FastF1 data into PostgreSQL
+- [x] Python ingestion pipeline
+- [x] Load FastF1 data into PostgreSQL
 - [ ] dbt transformations and data quality tests
 - [ ] Airflow orchestration
 - [ ] Tableau dashboard
