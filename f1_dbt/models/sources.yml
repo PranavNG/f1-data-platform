@@ -1,0 +1,110 @@
+version: 2
+
+sources:
+  - name: f1_warehouse
+    database: f1warehouse
+    schema: public
+
+    tables:
+      - name: dim_driver
+        columns:
+          - name: driver_key
+            tests:
+              - not_null
+              - unique
+
+          - name: driver_id
+            tests:
+              - not_null
+              - unique
+
+      - name: dim_team
+        columns:
+          - name: team_key
+            tests:
+              - not_null
+              - unique
+
+          - name: team_id
+            tests:
+              - not_null
+
+          - name: valid_from_season
+            tests:
+              - not_null
+
+      - name: dim_circuit
+        columns:
+          - name: circuit_key
+            tests:
+              - not_null
+              - unique
+
+          - name: circuit_name
+            tests:
+              - not_null
+
+      - name: dim_race
+        columns:
+          - name: race_key
+            tests:
+              - not_null
+              - unique
+
+          - name: season
+            tests:
+              - not_null
+
+          - name: round_number
+            tests:
+              - not_null
+
+          - name: circuit_key
+            tests:
+              - not_null
+
+      - name: fact_race_results
+        columns:
+          - name: race_key
+            tests:
+              - not_null
+
+          - name: driver_key
+            tests:
+              - not_null
+
+          - name: team_key
+            tests:
+              - not_null
+
+      - name: fact_qualifying
+        columns:
+          - name: race_key
+            tests:
+              - not_null
+
+          - name: driver_key
+            tests:
+              - not_null
+
+          - name: team_key
+            tests:
+              - not_null
+
+      - name: fact_lap_times
+        columns:
+          - name: race_key
+            tests:
+              - not_null
+
+          - name: driver_key
+            tests:
+              - not_null
+
+          - name: team_key
+            tests:
+              - not_null
+
+          - name: lap_number
+            tests:
+              - not_null
