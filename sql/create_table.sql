@@ -109,3 +109,36 @@ CREATE TABLE fact_lap_times(
     REFERENCES dim_team(team_key),
     CONSTRAINT unq_lap_time UNIQUE (race_key, driver_key, lap_number)
 );
+
+CREATE TABLE IF NOT EXISTS fact_sprint_results (
+    sprint_result_key BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+
+    race_key INT NOT NULL,
+    driver_key INT NOT NULL,
+    team_key INT NOT NULL,
+
+    grid_position SMALLINT,
+    finish_position SMALLINT,
+    classified_position VARCHAR,
+
+    points NUMERIC(5,2) NOT NULL,
+    laps_completed SMALLINT NOT NULL,
+
+    sprint_time INTERVAL,
+    sprint_status VARCHAR NOT NULL,
+
+    CONSTRAINT fk_sprint_race
+        FOREIGN KEY (race_key)
+        REFERENCES dim_race(race_key),
+
+    CONSTRAINT fk_sprint_driver
+        FOREIGN KEY (driver_key)
+        REFERENCES dim_driver(driver_key),
+
+    CONSTRAINT fk_sprint_team
+        FOREIGN KEY (team_key)
+        REFERENCES dim_team(team_key),
+
+    CONSTRAINT unq_sprint_result
+        UNIQUE (race_key, driver_key)
+);
