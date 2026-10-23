@@ -1,0 +1,118 @@
+version: 2
+
+models:
+
+  - name: int_driver_race_pace
+    description: Driver-level race pace summary based on technically valid laps.
+    columns:
+      - name: race_key
+        tests:
+          - not_null
+      - name: driver_key
+        tests:
+          - not_null
+      - name: team_key
+        tests:
+          - not_null
+
+  - name: int_tyre_stints
+    description: Driver tyre stint summaries by race, stint and compound.
+    columns:
+      - name: race_key
+        tests:
+          - not_null
+      - name: driver_key
+        tests:
+          - not_null
+      - name: team_key
+        tests:
+          - not_null
+      - name: stint
+        tests:
+          - not_null
+      - name: compound
+        tests:
+          - not_null
+
+  - name: int_race_mobility
+    description: Driver race movement metrics derived from grid and finishing position.
+    columns:
+      - name: race_key
+        tests:
+          - not_null
+      - name: driver_key
+        tests:
+          - not_null
+
+  - name: mart_driver_season
+    description: Driver season-level performance including Grand Prix and Sprint points.
+    columns:
+      - name: season
+        tests:
+          - not_null
+      - name: driver_key
+        tests:
+          - not_null
+
+  - name: mart_team_season
+    description: Constructor season-level performance including Grand Prix and Sprint points.
+    columns:
+      - name: season
+        tests:
+          - not_null
+      - name: team_key
+        tests:
+          - not_null
+
+  - name: mart_race_summary
+    description: One row per race containing winner, pole sitter and race-level movement metrics.
+    columns:
+      - name: race_key
+        tests:
+          - not_null
+          - unique
+      - name: season
+        tests:
+          - not_null
+      - name: round_number
+        tests:
+          - not_null
+
+  - name: mart_driver_race_pace
+    description: Tableau-ready driver race pace summary.
+    columns:
+      - name: race_key
+        tests:
+          - not_null
+      - name: driver_key
+        tests:
+          - not_null
+      - name: team_key
+        tests:
+          - not_null
+
+  - name: mart_tyre_strategy
+    description: Tableau-ready tyre stint strategy data.
+    columns:
+      - name: race_key
+        tests:
+          - not_null
+      - name: driver_key
+        tests:
+          - not_null
+      - name: stint
+        tests:
+          - not_null
+
+  - name: mart_race_position_laps
+    description: Lap-by-lap driver race position and tyre information.
+    columns:
+      - name: race_key
+        tests:
+          - not_null
+      - name: driver_key
+        tests:
+          - not_null
+      - name: lap_number
+        tests:
+          - not_null

@@ -108,3 +108,16 @@ sources:
           - name: lap_number
             tests:
               - not_null
+      - name: fact_sprint_results
+        columns:
+          - name: race_key
+            tests:
+              - not_null
+
+          - name: driver_key
+            tests:
+              - not_null
+
+          - name: team_key
+            tests:
+              - not_null
