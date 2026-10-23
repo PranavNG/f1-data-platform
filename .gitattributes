@@ -1,0 +1,5 @@
+# Recognise SQL files
+*.sql linguist-language=SQL
+
+# Recognise dbt SQL models
+f1_dbt/models/**/*.sql linguist-language=SQL
