@@ -98,7 +98,7 @@ Intermediate models and analytical marts will be added for driver performance, t
 - [x] Python ingestion pipeline
 - [x] FastF1 and reference data loaded into PostgreSQL
 - [x] dbt staging models created
-- [ ] Intermediate dbt models and analytical marts
+- [x] Intermediate dbt models and analytical marts
 - [ ] Airflow orchestration
 - [ ] Tableau dashboard
 
@@ -120,11 +120,15 @@ f1-data-platform/
 ├── f1_dbt/
 │   ├── models/
 │   │   ├── sources.yml
+│   │   ├── intermediate/
+│   │   ├── mart/
 │   │   └── staging/
 │   ├── macros/
 │   ├── tests/
 │   └── dbt_project.yml
 ├── airflow/
+|   ├──dags/
+|   └──logs
 ├── dashboards/
 ├── tests/
 └── requirements.txt
