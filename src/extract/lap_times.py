@@ -1,6 +1,7 @@
 import fastf1
 import pandas as pd
 from pathlib import Path
+from fastf1.exceptions import DataNotLoadedError
 
 RACES_FILE = Path("data/races_clean.csv")
 
@@ -13,16 +14,8 @@ CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
 fastf1.Cache.enable_cache(str(CACHE_DIR))
 
-
-# --------------------------------------------------
-# Load races
-# --------------------------------------------------
 races_df = pd.read_csv(RACES_FILE)
 
-
-# --------------------------------------------------
-# Load checkpoint
-# --------------------------------------------------
 completed_races = set()
 
 if CHECKPOINT_FILE.exists():
@@ -42,10 +35,6 @@ print(
     f"{len(completed_races)}"
 )
 
-
-# --------------------------------------------------
-# Loop through races
-# --------------------------------------------------
 for _, race in races_df.iterrows():
 
     season = int(race["season"])
@@ -72,16 +61,29 @@ for _, race in races_df.iterrows():
         "R"
     )
 
-    session.load(
-        laps=True,
-        telemetry=False,
-        weather=False,
-        messages=False
-    )
+    try:
+        session.load(
+            laps=True,
+            telemetry=False,
+            weather=False,
+            messages=False
+        )
 
-    # --------------------------------------------------
-    # Driver/team mapping from race results
-    # --------------------------------------------------
+        # Force-check that lap data is actually available
+        if session.laps.empty:
+            print(
+                f"No lap data available for "
+                f"{season} Round {round_number}. Skipping."
+            )
+            continue
+
+    except DataNotLoadedError:
+        print(
+            f"Race data not yet available for "
+            f"{season} Round {round_number}. Skipping."
+        )
+        continue
+
     driver_mapping = session.results[
         [
             "Abbreviation",
