@@ -12,5 +12,16 @@ f1_dbt/target/
 f1_dbt/logs/
 f1_dbt/dbt_packages/
 
+#airflow generated files
+# Airflow runtime files
+airflow/airflow.db
+airflow/airflow.db-shm
+airflow/airflow.db-wal
+airflow/airflow.cfg
+airflow/logs/
+airflow/**/__pycache__/
+*.pyc
+
+
 # Local dbt user config
 *.user.yml
