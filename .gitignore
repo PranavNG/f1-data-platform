@@ -5,6 +5,7 @@ data/cache/
 data/*_partial.csv
 data/*_clean.csv
 data/*checkpoint*
+data/tableau/*.csv
 src/extract/EDA.ipynb
 
 # dbt generated files

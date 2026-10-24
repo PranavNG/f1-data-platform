@@ -99,7 +99,7 @@ Intermediate models and analytical marts will be added for driver performance, t
 - [x] FastF1 and reference data loaded into PostgreSQL
 - [x] dbt staging models created
 - [x] Intermediate dbt models and analytical marts
-- [ ] Airflow orchestration
+- [x] Airflow orchestration
 - [ ] Tableau dashboard
 
 ## Project Structure

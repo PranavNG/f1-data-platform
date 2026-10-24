@@ -49,12 +49,50 @@ with DAG(
         )
 
     @task
+    def export_tableau_csvs():
+
+        output_dir = PROJECT_ROOT / "data" / "tableau"
+        output_dir.mkdir(parents=True, exist_ok=True)
+
+        marts = [
+            "mart_driver_season",
+            "mart_team_season",
+            "mart_race_summary",
+            "mart_driver_race_pace",
+            "mart_tyre_strategy",
+            "mart_race_position_laps",
+        ]
+
+        for mart in marts:
+
+            output_file = output_dir / f"{mart}.csv"
+
+            print(f"Exporting {mart} → {output_file}")
+
+            command = (
+                f"\\COPY "
+                f"(SELECT * FROM {mart}) "
+                f"TO '{output_file}' "
+                f"CSV HEADER"
+            )
+
+            subprocess.run(
+                [
+                    "psql",
+                    "-d",
+                    "f1warehouse",
+                    "-c",
+                    command,
+                ],
+                cwd=PROJECT_ROOT,
+                check=True,
+            )
+
+        print("Tableau CSV exports completed.")
+
+    @task
     def pipeline_complete():
         print("F1 data pipeline completed successfully.")
-
-    # -------------------------
-    # Extraction
-    # -------------------------
 
     extract_driver = run_python_script.override(
         task_id="extract_driver"
@@ -87,10 +125,6 @@ with DAG(
     extract_sprint_results = run_python_script.override(
         task_id="extract_sprint_results"
     )("src/extract/sprint_results.py")
-
-    # -------------------------
-    # PostgreSQL loading
-    # -------------------------
 
     load_driver = run_python_script.override(
         task_id="load_driver"
@@ -125,11 +159,8 @@ with DAG(
     )("src/load/postgres_sprint_results.py")
 
     dbt_build = run_dbt_build()
+    tableau_export = export_tableau_csvs()
     complete = pipeline_complete()
-
-    # -------------------------
-    # Dependencies
-    # -------------------------
 
     (
         extract_driver
@@ -149,5 +180,6 @@ with DAG(
         >> load_lap_times
         >> load_sprint_results
         >> dbt_build
+        >> tableau_export
         >> complete
     )
