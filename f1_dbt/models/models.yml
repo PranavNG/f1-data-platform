@@ -116,3 +116,21 @@ models:
       - name: lap_number
         tests:
           - not_null
+  - name: mart_race_results
+    description: "Driver-level race results for the Race Explorer dashboard."
+    columns:
+      - name: race_key
+        data_tests:
+          - not_null
+
+      - name: driver_key
+        data_tests:
+          - not_null
+
+      - name: season
+        data_tests:
+          - not_null
+
+      - name: official_event_name
+        data_tests:
+          - not_null
