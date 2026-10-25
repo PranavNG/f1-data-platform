@@ -1,3 +1,4 @@
+
 WITH race_results AS (
 
     SELECT
@@ -70,11 +71,48 @@ sprints AS (
     GROUP BY
         r.season,
         s.driver_key
+),
+
+primary_team AS (
+
+    SELECT
+        season,
+        driver_key,
+        team_key
+
+    FROM (
+        SELECT
+            r.season,
+            rr.driver_key,
+            rr.team_key,
+
+            ROW_NUMBER() OVER (
+                PARTITION BY r.season, rr.driver_key
+                ORDER BY COUNT(*) DESC, rr.team_key
+            ) AS team_rank
+
+        FROM {{ ref('stg_race_results') }} rr
+
+        JOIN {{ ref('stg_race') }} r
+            ON rr.race_key = r.race_key
+
+        WHERE rr.team_key IS NOT NULL
+
+        GROUP BY
+            r.season,
+            rr.driver_key,
+            rr.team_key
+    ) ranked_teams
+
+    WHERE team_rank = 1
 )
 
 SELECT
     rr.season,
     rr.driver_key,
+    d.full_name,
+    d.abbreviation,
+    t.team_name,
 
     rr.races_started,
 
@@ -88,8 +126,7 @@ SELECT
     rr.race_wins,
     rr.race_podiums,
 
-    COALESCE(s.sprint_wins, 0)
-        AS sprint_wins,
+    COALESCE(s.sprint_wins, 0) AS sprint_wins,
 
     rr.avg_grid_position,
     q.avg_qualifying_position,
@@ -108,3 +145,13 @@ LEFT JOIN qualifying q
 LEFT JOIN sprints s
     ON rr.season = s.season
     AND rr.driver_key = s.driver_key
+
+LEFT JOIN {{ ref('stg_driver') }} d
+    ON rr.driver_key = d.driver_key
+
+LEFT JOIN primary_team pt
+    ON rr.season = pt.season
+    AND rr.driver_key = pt.driver_key
+
+LEFT JOIN {{ ref('stg_team') }} t
+    ON pt.team_key = t.team_key

@@ -5,21 +5,14 @@ WITH race_results AS (
         rr.team_key,
 
         COUNT(DISTINCT rr.race_key) AS races_entered,
-
         SUM(rr.points) AS race_points,
 
         SUM(
-            CASE
-                WHEN rr.is_winner THEN 1
-                ELSE 0
-            END
+            CASE WHEN rr.is_winner THEN 1 ELSE 0 END
         ) AS race_wins,
 
         SUM(
-            CASE
-                WHEN rr.is_podium THEN 1
-                ELSE 0
-            END
+            CASE WHEN rr.is_podium THEN 1 ELSE 0 END
         ) AS race_podiums,
 
         AVG(rr.grid_position) AS avg_grid_position,
@@ -48,8 +41,7 @@ qualifying AS (
         r.season,
         q.team_key,
 
-        AVG(q.qualifying_position)
-            AS avg_qualifying_position
+        AVG(q.qualifying_position) AS avg_qualifying_position
 
     FROM {{ ref('stg_qualifying') }} q
 
@@ -71,9 +63,7 @@ sprints AS (
 
         SUM(
             CASE
-                WHEN s.is_sprint_winner THEN 1
-                ELSE 0
-            END
+                WHEN s.is_sprint_winner THEN 1 ELSE 0 END
         ) AS sprint_wins
 
     FROM {{ ref('stg_sprint_results') }} s
@@ -89,6 +79,7 @@ sprints AS (
 SELECT
     rr.season,
     rr.team_key,
+    t.team_name,
 
     rr.races_entered,
 
@@ -102,8 +93,7 @@ SELECT
     rr.race_wins,
     rr.race_podiums,
 
-    COALESCE(s.sprint_wins, 0)
-        AS sprint_wins,
+    COALESCE(s.sprint_wins, 0) AS sprint_wins,
 
     rr.avg_grid_position,
     q.avg_qualifying_position,
@@ -120,3 +110,6 @@ LEFT JOIN qualifying q
 LEFT JOIN sprints s
     ON rr.season = s.season
     AND rr.team_key = s.team_key
+
+LEFT JOIN {{ ref('stg_team') }} t
+    ON rr.team_key = t.team_key

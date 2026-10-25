@@ -4,6 +4,8 @@ An end-to-end Formula 1 data engineering project that transforms race data into 
 
 The project extends my previous Formula 1 analytics work by focusing on data ingestion, dimensional modelling, transformation, orchestration, and BI reporting.
 
+https://public.tableau.com/shared/3YYR7WX4M?:display_count=n&:origin=viz_share_link - Take a look! 
+
 ## Architecture
 
 FastF1 / Circuit Reference Data  
@@ -100,7 +102,7 @@ Intermediate models and analytical marts will be added for driver performance, t
 - [x] dbt staging models created
 - [x] Intermediate dbt models and analytical marts
 - [x] Airflow orchestration
-- [ ] Tableau dashboard
+- [x] Tableau dashboard
 
 ## Project Structure
 

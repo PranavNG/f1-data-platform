@@ -1,0 +1,34 @@
+[0m13:25:42.143178 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10d8606e0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10eefa850>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10eefaad0>]}
+
+
+============================== 13:25:42.146265 | ac64984c-2663-4ebb-9b8a-812165e41faf ==============================
+[0m13:25:42.146265 [info ] [MainThread]: Running with dbt=1.13.0-b1
+[0m13:25:42.146597 [debug] [MainThread]: running dbt with arguments {'debug': 'False', 'use_experimental_parser': 'False', 'cache_selected_only': 'False', 'use_colors': 'True', 'version_check': 'True', 'no_print': 'None', 'hints_enabled': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'warn_error': 'None', 'introspect': 'True', 'partial_parse': 'True', 'maximum_seed_size_mib': '1', 'log_format': 'default', 'profiles_dir': '/Users/pranavghatigar/.dbt', 'empty': 'False', 'write_json': 'True', 'static_parser': 'True', 'printer_width': '80', 'invocation_command': 'dbt run --select mart_team_season', 'log_cache_events': 'False', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'fail_fast': 'False', 'log_path': 'logs', 'indirect_selection': 'eager', 'target_path': 'None'}
+[0m13:25:42.146811 [debug] [MainThread]: Tracking: tracking
+[0m13:25:42.147081 [error] [MainThread]: [[31mERROR[0m]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /Users/pranavghatigar/Documents/f1-data-platform/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m13:25:42.148716 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": false, "command_wall_clock_time": 0.069170706, "process_in_blocks": "0", "process_kernel_time": 0.191901, "process_mem_max_rss": "130154496", "process_out_blocks": "0", "process_user_time": 0.784218}
+[0m13:25:42.148979 [debug] [MainThread]: Command `dbt run` failed at 13:25:42.148932 after 0.07 seconds
+[0m13:25:42.149162 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10ef8c640>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10ee8bad0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10ef496a0>]}
+[0m13:25:42.149328 [debug] [MainThread]: Flushing usage events
+[0m13:25:43.285033 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m16:41:55.270989 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10b27c6e0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10c916850>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10c916ad0>]}
+
+
+============================== 16:41:55.274118 | 294b9913-ad16-45dd-946a-1985ce334991 ==============================
+[0m16:41:55.274118 [info ] [MainThread]: Running with dbt=1.13.0-b1
+[0m16:41:55.274444 [debug] [MainThread]: running dbt with arguments {'send_anonymous_usage_stats': 'True', 'log_format': 'default', 'write_json': 'True', 'use_experimental_parser': 'False', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'cache_selected_only': 'False', 'maximum_seed_size_mib': '1', 'version_check': 'True', 'debug': 'False', 'indirect_selection': 'eager', 'printer_width': '80', 'warn_error': 'None', 'profiles_dir': '/Users/pranavghatigar/.dbt', 'empty': 'False', 'invocation_command': 'dbt run --select mart_driver_season', 'fail_fast': 'False', 'introspect': 'True', 'hints_enabled': 'True', 'static_parser': 'True', 'use_colors': 'True', 'target_path': 'None', 'log_cache_events': 'False', 'quiet': 'False', 'no_print': 'None', 'log_path': 'logs', 'partial_parse': 'True'}
+[0m16:41:55.274669 [debug] [MainThread]: Tracking: tracking
+[0m16:41:55.274926 [error] [MainThread]: [[31mERROR[0m]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /Users/pranavghatigar/Documents/f1-data-platform/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m16:41:55.276540 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": false, "command_wall_clock_time": 0.06941491, "process_in_blocks": "0", "process_kernel_time": 0.185765, "process_mem_max_rss": "132448256", "process_out_blocks": "0", "process_user_time": 0.776959}
+[0m16:41:55.276841 [debug] [MainThread]: Command `dbt run` failed at 16:41:55.276790 after 0.07 seconds
+[0m16:41:55.277022 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10c9a8640>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10c8a7ad0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10c9656a0>]}
+[0m16:41:55.277197 [debug] [MainThread]: Flushing usage events
+[0m16:41:56.522440 [debug] [MainThread]: An error was encountered while trying to flush usage events
